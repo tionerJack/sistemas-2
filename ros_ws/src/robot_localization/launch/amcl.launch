@@ -4,7 +4,7 @@
   <rosparam file="$(find robot_localization)/config/amcl_params.yaml" command="load"/>
 
   <!-- Lanzar map_server con el mapa guardado -->
-  <arg name="map_file" default="$(find robot_gazebo)/maps/mapa_final.yaml"/>
+  <arg name="map_file" default="/ros_ws/maps/warehouse_map.yaml"/>
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>
 
   <!-- Lanzar AMCL -->

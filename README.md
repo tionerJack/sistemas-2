@@ -29,6 +29,30 @@ sg docker -c "docker exec ros_noetic_sim bash /ros_ws/run_sim.sh"
 sg docker -c "docker exec ros_noetic_sim bash /ros_ws/run_all.sh"
 ```
 
+## 5. Visualización 3D (GUI)
+
+Primera vez, permitir conexiones X11 desde el contenedor:
+
+```bash
+xhost +local:
+```
+
+### Gazebo (mundo 3D)
+
+```bash
+sg docker -c "docker exec -d ros_noetic_sim bash -c 'source /opt/ros/noetic/setup.bash && export DISPLAY=:0 && rosrun gazebo_ros gzclient'"
+```
+
+### RViz (visualización ROS: mapa, rutas, robot)
+
+```bash
+sg docker -c "docker exec -d ros_noetic_sim bash -c 'source /opt/ros/noetic/setup.bash && source /ros_ws/devel/setup.bash && export DISPLAY=:0 && rosrun rviz rviz -d /ros_ws/src/robot_description/config/robot.rviz'"
+```
+
+> **Nota**: `xhost +local:` solo necesita ejecutarse una vez por sesión de escritorio. Permite que el contenedor acceda al servidor X11 del host.
+
+---
+
 ### Qué hace `run_all.sh`
 
 | Paso | Acción                                               |

@@ -110,3 +110,5 @@ El proyecto integrador **Simulación de Navegación Autónoma en Entornos Cerrad
 10. ✅ **AMCL**: localización activa publicando [`/amcl_pose`] en frame `map`
 11. ✅ **move_base**: navegación activa con costmaps (global+local), goal enviado a (3.0, 0.0)
 12. ✅ **TF tree**: map → odom → base_link → laser_frame (estático 50Hz)
+13. ✅ **3 videos de simulación** (H.264, 576×576, 20s, 10fps): [`videos/tarea1_mapping.mp4`](ros_ws/videos/tarea1_mapping.mp4) [`videos/tarea2_localization.mp4`](ros_ws/videos/tarea2_localization.mp4) [`videos/tarea3_navigation.mp4`](ros_ws/videos/tarea3_navigation.mp4)
+14. ✅ **Renderizador autónomo** [`render_video.py`](ros_ws/render_video.py) — sintetiza datos desde PGM sin ROS ni rosbag

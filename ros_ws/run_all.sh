@@ -48,20 +48,36 @@ for i in $(seq 1 15); do
 done
 echo "Gmapping ready."
 
-# Move robot in exploration pattern to build map
-echo "Moving robot to explore environment (60s)..."
+# Move robot in zigzag (lawnmower) exploration pattern to cover warehouse area
+echo "Moving robot to explore environment (120s)..."
 (
-  # Square pattern: forward, turn, forward, turn...
-  for i in 1 2 3 4 5 6; do
-    # Move forward
+  # Zigzag pattern: forward across corridor, slight turn, forward back, repeat
+  for row in 1 2 3 4 5; do
+    # Forward leg
     rostopic pub -1 /cmd_vel geometry_msgs/Twist \
-      '{linear: {x: 0.4, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}' &>/dev/null
-    sleep 5
-    # Turn
+      '{linear: {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}' &>/dev/null
+    sleep 8
+    # Small right arc to shift lane
     rostopic pub -1 /cmd_vel geometry_msgs/Twist \
-      '{linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.5}}' &>/dev/null
+      '{linear: {x: 0.3, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.3}}' &>/dev/null
+    sleep 3
+    # Backward leg (opposite direction)
+    rostopic pub -1 /cmd_vel geometry_msgs/Twist \
+      '{linear: {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}' &>/dev/null
+    sleep 8
+    # Small left arc to shift lane
+    rostopic pub -1 /cmd_vel geometry_msgs/Twist \
+      '{linear: {x: 0.3, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: -0.3}}' &>/dev/null
     sleep 3
   done
+  # Wide rotations to cover lateral areas
+  rostopic pub -1 /cmd_vel geometry_msgs/Twist \
+    '{linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.4}}' &>/dev/null
+  sleep 8
+  # Final forward sweep
+  rostopic pub -1 /cmd_vel geometry_msgs/Twist \
+    '{linear: {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}' &>/dev/null
+  sleep 10
   # Stop
   rostopic pub -1 /cmd_vel geometry_msgs/Twist \
     '{linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}' &>/dev/null
@@ -69,7 +85,7 @@ echo "Moving robot to explore environment (60s)..."
 MOVE_PID=$!
 
 # Wait for exploration
-sleep 60
+sleep 120
 kill $MOVE_PID 2>/dev/null
 
 # Save the map (using custom script that handles simulated time)
