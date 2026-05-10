@@ -10,14 +10,13 @@ Pipeline completo de 3 tareas: **Mapeo (Gmapping)** → **Localización (AMCL)**
 ## 1. Construir imagen
 
 ```bash
-cd docker
-docker compose build
+sg docker -c "docker compose -f docker/docker-compose.yml build"
 ```
 
 ## 2. Iniciar contenedor
 
 ```bash
-docker compose up -d
+sg docker -c "docker compose -f docker/docker-compose.yml up -d"
 ```
 
 ## 3. Ejecutar simulación completa (automático)
