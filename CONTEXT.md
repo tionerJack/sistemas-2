@@ -105,3 +105,8 @@ El proyecto integrador **Simulación de Navegación Autónoma en Entornos Cerrad
 5. ✅ `REVIEW_REPORT.md` — Auditoría final
 6. ✅ **Entorno Docker ROS Noetic + Gazebo** — Imagen compilada exitosamente
 7. ✅ **5 paquetes ROS** implementados con parámetros exactos de ARCHITECTURE.md
+8. ✅ **Pipeline 3 tareas ejecutado** — gmapping → amcl → move_base
+9. ✅ **Mapa guardado**: [`warehouse_map.pgm`](ros_ws/maps/warehouse_map.pgm) (331KB) + `.yaml`
+10. ✅ **AMCL**: localización activa publicando [`/amcl_pose`] en frame `map`
+11. ✅ **move_base**: navegación activa con costmaps (global+local), goal enviado a (3.0, 0.0)
+12. ✅ **TF tree**: map → odom → base_link → laser_frame (estático 50Hz)

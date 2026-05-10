@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="differential_robot">
+    <pose>0 0 0.1 0 0 0</pose>
+    <link name="base_link">
+      <inertial><pose>0 0 0 0 0 0</pose><mass>3.0</mass>
+        <inertia><ixx>0.028125</ixx><ixy>0</ixy><ixz>0</ixz><iyy>0.045625</iyy><iyz>0</iyz><izz>0.0625</izz></inertia>
+      </inertial>
+      <visual name="visual">
+        <geometry><box><size>0.4 0.3 0.15</size></box></geometry>
+        <material><ambient>0.1 0.34 0.86 1.0</ambient></material>
+      </visual>
+      <collision name="collision">
+        <geometry><box><size>0.4 0.3 0.15</size></box></geometry>
+      </collision>
+    </link>
+    <link name="left_wheel_link">
+      <pose>0 0.175 0 0 0 0</pose>
+      <inertial><mass>0.3</mass><inertia><ixx>0.00084</ixx><iyy>0.00084</iyy><izz>0.00084</izz></inertia></inertial>
+      <visual name="visual">
+        <geometry><cylinder><radius>0.075</radius><length>0.04</length></cylinder></geometry>
+        <pose>0 0 0 1.5708 0 0</pose>
+        <material><ambient>0.3 0.3 0.3 1.0</ambient></material>
+      </visual>
+      <collision name="collision">
+        <geometry><cylinder><radius>0.075</radius><length>0.04</length></cylinder></geometry>
+        <pose>0 0 0 1.5708 0 0</pose>
+      </collision>
+    </link>
+    <joint name="base_to_left_wheel" type="revolute">
+      <parent>base_link</parent><child>left_wheel_link</child>
+      <axis><xyz>0 1 0</xyz><limit><effort>1.0</effort><velocity>10.0</velocity><lower>-3.14159</lower><upper>3.14159</upper></limit></axis>
+    </joint>
+    <link name="right_wheel_link">
+      <pose>0 -0.175 0 0 0 0</pose>
+      <inertial><mass>0.3</mass><inertia><ixx>0.00084</ixx><iyy>0.00084</iyy><izz>0.00084</izz></inertia></inertial>
+      <visual name="visual">
+        <geometry><cylinder><radius>0.075</radius><length>0.04</length></cylinder></geometry>
+        <pose>0 0 0 1.5708 0 0</pose>
+        <material><ambient>0.3 0.3 0.3 1.0</ambient></material>
+      </visual>
+      <collision name="collision">
+        <geometry><cylinder><radius>0.075</radius><length>0.04</length></cylinder></geometry>
+        <pose>0 0 0 1.5708 0 0</pose>
+      </collision>
+    </link>
+    <joint name="base_to_right_wheel" type="revolute">
+      <parent>base_link</parent><child>right_wheel_link</child>
+      <axis><xyz>0 1 0</xyz><limit><effort>1.0</effort><velocity>10.0</velocity><lower>-3.14159</lower><upper>3.14159</upper></limit></axis>
+    </joint>
+    <link name="caster_wheel_link">
+      <pose>-0.15 0 -0.075 0 0 0</pose>
+      <inertial><mass>0.05</mass><inertia><ixx>2e-5</ixx><iyy>2e-5</iyy><izz>2e-5</izz></inertia></inertial>
+      <visual name="visual">
+        <geometry><sphere><radius>0.025</radius></sphere></geometry>
+        <material><ambient>0.7 0.7 0.7 1.0</ambient></material>
+      </visual>
+      <collision name="collision">
+        <geometry><sphere><radius>0.025</radius></sphere></geometry>
+      </collision>
+    </link>
+    <joint name="base_to_caster" type="fixed">
+      <parent>base_link</parent><child>caster_wheel_link</child>
+    </joint>
+    <link name="laser_frame">
+      <pose>0.15 0 0.08 0 0 0</pose>
+      <inertial><mass>0.001</mass><inertia><ixx>1e-6</ixx><iyy>1e-6</iyy><izz>1e-6</izz></inertia></inertial>
+    </link>
+    <joint name="base_to_laser" type="fixed">
+      <parent>base_link</parent><child>laser_frame</child>
+    </joint>
+    <plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
+      <leftJoint>base_to_left_wheel</leftJoint>
+      <rightJoint>base_to_right_wheel</rightJoint>
+      <wheelSeparation>0.35</wheelSeparation>
+      <wheelDiameter>0.15</wheelDiameter>
+      <torque>1.0</torque>
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>base_link</robotBaseFrame>
+      <publishOdomTF>true</publishOdomTF>
+    </plugin>
+  </model>
+</sdf>

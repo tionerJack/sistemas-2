@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="laser_sensor">
+    <static>true</static>
+    <pose>0.15 0 0.18 0 0 0</pose>
+    <link name="laser_link">
+      <inertial><mass>0.001</mass><inertia><ixx>1e-6</ixx><iyy>1e-6</iyy><izz>1e-6</izz></inertia></inertial>
+      <sensor name="ray_sensor" type="ray">
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>360</samples>
+              <resolution>1.0</resolution>
+              <min_angle>-2.35619</min_angle>
+              <max_angle>2.35619</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.10</min>
+            <max>10.0</max>
+          </range>
+        </ray>
+        <plugin name="laser_plugin" filename="libgazebo_ros_laser.so">
+          <topicName>scan</topicName>
+          <frameName>laser_frame</frameName>
+          <updateRate>20.0</updateRate>
+        </plugin>
+      </sensor>
+    </link>
+  </model>
+</sdf>
