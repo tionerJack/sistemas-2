@@ -1,0 +1,62 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compilar LaTeX TENAM",
+            "type": "shell",
+            "command": "pdflatex",
+            "args": [
+                "-interaction=nonstopmode",
+                "trabajo_tenam.tex"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Compilar y Abrir PDF",
+            "type": "shell",
+            "command": "pdflatex -interaction=nonstopmode trabajo_tenam.tex && pdflatex -interaction=nonstopmode trabajo_tenam.tex && rm -f *.aux *.log *.out *.toc && xdg-open trabajo_tenam.pdf",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Limpiar archivos temporales",
+            "type": "shell",
+            "command": "rm",
+            "args": [
+                "-f",
+                "*.aux",
+                "*.log",
+                "*.out",
+                "*.toc",
+                "*.dvi"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        }
+    ]
+}

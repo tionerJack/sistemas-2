@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Argumentos -->
+  <arg name="world" default="$(find robot_gazebo)/launch/warehouse.world"/>
+  <arg name="model" default="$(find robot_description)/urdf/robot.xacro"/>
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="false"/>
+  <arg name="headless" default="true"/>
+  <arg name="debug" default="false"/>
+
+  <!-- Usar sim time -->
+  <param name="/use_sim_time" value="$(arg use_sim_time)"/>
+
+  <!-- Lanzar Gazebo con el mundo (headless sin GUI) -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world)"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+  <!-- Convertir Xacro a URDF y cargar en el servidor de parámetros -->
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
+
+  <!-- Spawnear el robot en Gazebo -->
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
+        args="-param robot_description -urdf -model differential_robot -x 0.0 -y 0.0 -z 0.1"/>
+
+  <!-- Publicar robot_state_publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+  <!-- Cargar controladores -->
+  <rosparam file="$(find robot_gazebo)/config/robot_control.yaml" command="load"/>
+  <node name="controller_spawner" pkg="controller_manager" type="spawner"
+        args="joint_state_controller"/>
+</launch>

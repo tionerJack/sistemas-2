@@ -1,0 +1,46 @@
+# slam_gmapping parameters - Tarea 1: Mapeo
+# Basado en ARCHITECTURE.md §3.1
+
+# Frames
+base_frame: base_link
+odom_frame: odom
+map_frame: map
+
+# Filtro de partículas (Rao-Blackwellized)
+particles: 80
+
+# Resolución del mapa
+delta: 0.05
+
+# Límites del mapa
+xmin: -10.0
+ymin: -10.0
+xmax: 10.0
+ymax: 10.0
+
+# Modelo de odometría (probabilístico)
+srr: 0.01
+srt: 0.02
+str: 0.01
+stt: 0.02
+
+# Umbrales de actualización
+linearUpdate: 1.0
+angularUpdate: 0.5
+temporalUpdate: 3.0
+resampleThreshold: 0.5
+
+# Modelo de sensor
+maxUrange: 8.0
+maxRange: 10.0
+sigma: 0.05
+kernelSize: 1
+lstep: 0.05
+astep: 0.05
+iterations: 5
+lsigma: 0.075
+ogain: 3.0
+llsamplerange: 0.01
+llsamplestep: 0.01
+lasamplerange: 0.005
+lasamplestep: 0.005

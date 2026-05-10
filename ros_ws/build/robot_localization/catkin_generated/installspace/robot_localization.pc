@@ -1,0 +1,8 @@
+prefix=/ros_ws/install
+
+Name: robot_localization
+Description: Description of robot_localization
+Version: 1.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

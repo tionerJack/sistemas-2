@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>robot_navigation</name>
+  <version>1.0.0</version>
+  <description>Configuración Navigation Stack (A* + DWA) para Tarea 3 de navegación autónoma</description>
+  <maintainer email="user@example.com">user</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>roscpp</depend>
+  <depend>move_base</depend>
+  <depend>dwa_local_planner</depend>
+  <depend>navfn</depend>
+  <depend>map_server</depend>
+  <depend>amcl</depend>
+</package>

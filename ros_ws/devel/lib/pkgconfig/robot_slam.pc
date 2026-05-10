@@ -1,0 +1,8 @@
+prefix=/ros_ws/devel
+
+Name: robot_slam
+Description: Description of robot_slam
+Version: 1.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

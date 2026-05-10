@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Lanzar robot en Gazebo -->
+  <include file="$(find robot_gazebo)/launch/spawn_robot.launch"/>
+
+  <!-- Lanzar map_server con el mapa guardado -->
+  <arg name="map_file" default="$(find robot_gazebo)/maps/mapa_final.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>
+
+  <!-- Lanzar AMCL -->
+  <include file="$(find robot_localization)/launch/amcl.launch"/>
+
+  <!-- Lanzar move_base (Navigation Stack) -->
+  <include file="$(find robot_navigation)/launch/move_base.launch"/>
+
+  <!-- RViz con configuración -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_description)/config/robot.rviz"/>
+</launch>

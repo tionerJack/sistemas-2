@@ -1,0 +1,1127 @@
+% ============================================================
+% Plantilla para Artículos Académicos
+% Formato Harvard para Referencias
+% ============================================================
+
+\documentclass[12pt,letterpaper]{article}
+
+% ============================================================
+% PAQUETES ESENCIALES
+% ============================================================
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[letterpaper,top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm,headheight=25pt]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{natbib}  % Para gestión de citas Harvard
+\usepackage{authblk} % Para múltiples autores y afiliaciones
+\usepackage{listings} % Para fragmentos de código
+\usepackage{diagbox}  % Para diagonales en tablas
+
+% Configuración de listings para YAML/XML
+\lstdefinestyle{bashstyle}{
+    language=bash,
+    basicstyle=\ttfamily\footnotesize,
+    commentstyle=\color{gray},
+    numbers=left,
+    numberstyle=\tiny,
+    frame=single,
+    breaklines=true,
+    tabsize=2,
+    extendedchars=true,
+    inputencoding=utf8,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+             {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+             {ñ}{{\~n}}1 {Ñ}{{\~N}}1
+}
+
+\lstdefinestyle{xmlstyle}{
+    language=XML,
+    basicstyle=\ttfamily\footnotesize,
+    commentstyle=\color{gray},
+    numbers=left,
+    numberstyle=\tiny,
+    frame=single,
+    breaklines=true,
+    tabsize=2,
+    extendedchars=true,
+    inputencoding=utf8,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+             {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+             {ñ}{{\~n}}1 {Ñ}{{\~N}}1
+}
+
+\lstdefinestyle{yamlstyle}{
+    basicstyle=\ttfamily\footnotesize,
+    numbers=left,
+    numberstyle=\tiny,
+    frame=single,
+    breaklines=true,
+    tabsize=2,
+    extendedchars=true,
+    inputencoding=utf8,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+             {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+             {ñ}{{\~n}}1 {Ñ}{{\~N}}1
+}
+
+\lstdefinestyle{mermaidstyle}{
+    basicstyle=\ttfamily\footnotesize,
+    numbers=left,
+    numberstyle=\tiny,
+    frame=single,
+    breaklines=true,
+    tabsize=2,
+    extendedchars=true,
+    inputencoding=utf8,
+}
+
+% ============================================================
+% COLORES ACADÉMICOS
+% ============================================================
+\definecolor{titleColor}{RGB}{30,64,175}      % Azul para títulos
+\definecolor{sectionColor}{RGB}{30,58,138}    % Azul oscuro para secciones
+\definecolor{linkColor}{RGB}{59,130,246}      % Azul claro para enlaces
+
+% ============================================================
+% CONFIGURACIÓN DE HYPERREF
+% ============================================================
+\hypersetup{
+    colorlinks=true,
+    linkcolor=sectionColor,
+    filecolor=sectionColor,
+    urlcolor=linkColor,
+    citecolor=sectionColor,
+    pdftitle={Simulación de Navegación Autónoma en Entornos Cerrados},
+    pdfauthor={Ismael Rufino Grajeda Marín}
+}
+
+% ============================================================
+% CONFIGURACIÓN DE TÍTULOS
+% ============================================================
+\titleformat{\section}
+    {\color{titleColor}\Large\bfseries}
+    {\thesection.}{0.5em}{}
+    
+\titleformat{\subsection}
+    {\color{sectionColor}\large\bfseries}
+    {\thesubsection.}{0.5em}{}
+
+\titleformat{\subsubsection}
+    {\color{sectionColor}\normalsize\bfseries}
+    {\thesubsubsection.}{0.5em}{}
+
+% ============================================================
+% CONFIGURACIÓN DE ENCABEZADO Y PIE DE PÁGINA
+% ============================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textit{\tituloTrabajo}}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\headrule}{\hbox to\headwidth{%
+  \color{sectionColor}\leaders\hrule height \headrulewidth\hfill}}
+
+% ============================================================
+% INFORMACIÓN DEL DOCUMENTO (EDITAR AQUÍ)
+% ============================================================
+\newcommand{\institucion}{COLEGIO DE FORMACIÓN EDUCATIVA TENAM}
+\newcommand{\programa}{Doctorado en Ingeniería Aplicada}
+\newcommand{\materia}{Seminario de Sistemas Inteligentes II: Robótica Móvil}
+\newcommand{\actividad}{Proyecto Integrador}
+\newcommand{\tituloTrabajo}{Simulación de Navegación Autónoma en Entornos Cerrados}
+\newcommand{\subtituloTrabajo}{Mapeo, Localización y Navegación con ROS y Gazebo}
+\newcommand{\estudianteNombre}{Ismael Rufino Grajeda Marín}
+\newcommand{\estudianteGrado}{M.I.A.}
+\newcommand{\profesorNombre}{Nombre del Profesor}
+\newcommand{\fechaEntrega}{25 de diciembre de 2025}
+
+% Autor(es) - usar \author y \affil para múltiples autores
+\title{\textbf{\tituloTrabajo}\\[0.3cm] 
+       \large \subtituloTrabajo}
+\author{Ismael Rufino Grajeda Marín, M.I.A.}
+\affil{Doctorado en Ingeniería Aplicada\\
+       Colegio de Formación Educativa TENAM\\
+       Email: tione_210@hotmail.com}
+\date{\today}
+
+% ============================================================
+% CONFIGURACIÓN DE CITAS APA 7ª EDICIÓN
+% ============================================================
+\bibliographystyle{apalike}  % Estilo APA
+\setcitestyle{authoryear,open={(},close={)}}
+
+% ============================================================
+% CONFIGURACIÓN DEL DOCUMENTO
+% ============================================================
+\setstretch{1.4}  % Interlineado 1.4 (reducido de 1.5)
+\setlength{\parindent}{1cm}  % Sangría de párrafo
+\setlength{\parskip}{0.15em}  % Espacio entre párrafos reducido
+
+% ============================================================
+% INICIO DEL DOCUMENTO
+% ============================================================
+\begin{document}
+
+% ============================================================
+% PORTADA INSTITUCIONAL
+% ============================================================
+\begin{titlepage}
+    \centering
+    \vspace*{0.3cm}
+    
+    % Logo institucional
+    \includegraphics[width=0.22\textwidth]{logo.png}\\[0.3cm]
+    
+    {\Large \textbf{\institucion}}\\[0.2cm]
+    {\large \programa}\\[1cm]
+    
+    % Información de la materia
+    {\large \textbf{\materia}}\\[0.2cm]
+    {\normalsize \actividad}\\[1.2cm]
+    
+    % Título del trabajo
+    {\LARGE\color{titleColor}\textbf{\tituloTrabajo}}\\[0.4cm]
+    {\Large \subtituloTrabajo}\\[1.5cm]
+    
+    % Información del estudiante y profesor en formato compacto
+    \begin{flushleft}
+    \hspace{2.5cm}\begin{minipage}{0.65\textwidth}
+        \textbf{Presenta:}\\
+        \estudianteNombre, \estudianteGrado\\[0.7cm]
+        
+    \end{minipage}
+    \end{flushleft}
+    
+    \vfill
+    
+    % Fecha
+    {\large \fechaEntrega}
+    
+    \vspace{0.5cm}
+\end{titlepage}
+
+\newpage
+\setcounter{page}{1}
+
+% ============================================================
+% RESUMEN
+% ============================================================
+\begin{abstract}
+\noindent
+El presente proyecto integrador aborda la implementación completa de un sistema de navegación autónoma para un robot móvil diferencial en un entorno cerrado simulado, utilizando el framework ROS (Robot Operating System) en conjunto con el simulador Gazebo y la herramienta de visualización RViz. El proyecto se estructura en tres tareas secuenciales: (1) construcción de un mapa de rejilla de ocupación mediante SLAM con Gmapping, empleando un filtro de partículas Rao-Blackwellized; (2) localización probabilística del robot sobre el mapa generado utilizando AMCL con muestreo adaptativo KLD; y (3) navegación autónoma hacia puntos meta mediante el Navigation Stack, combinando el planificador global A* con el planificador local DWA (Dynamic Window Approach). Se detalla el diseño del robot diferencial en URDF, la cinemática asociada, la configuración paramétrica de cada paquete y el análisis de resultados esperados. El documento constituye una guía completa para la reproducción del pipeline experimental y sienta las bases para trabajos futuros en robótica móvil autónoma.
+
+\vspace{0.5cm}
+
+\textbf{Palabras clave:} Navegación autónoma, ROS, SLAM, Gmapping, AMCL, Navigation Stack, robot diferencial, simulación Gazebo.
+
+\end{abstract}
+
+\vspace{0.5cm}
+
+% ============================================================
+% INTRODUCCIÓN
+% ============================================================
+\section{Introducción}
+
+La robótica móvil autónoma ha experimentado un avance significativo en las últimas dos décadas, impulsada por la convergencia de algoritmos probabilísticos de estimación, sensores de bajo costo y frameworks de desarrollo robótico de código abierto \citep{siegwart2011introduction}. La capacidad de un robot para desplazarse de manera autónoma en entornos no estructurados o desconocidos requiere la resolución de tres problemas fundamentales: ¿dónde me encuentro? (localización), ¿cómo es el entorno? (mapeo) y ¿cómo llego a mi destino? (planificación de movimiento) \citep{thrun2005probabilistic}. Estos problemas, conocidos colectivamente como SLAM (Simultaneous Localization and Mapping) en el caso del mapeo con localización simultánea, constituyen el núcleo de la navegación autónoma.
+
+El Robot Operating System (ROS) se ha consolidado como el estándar \textit{de facto} en investigación y desarrollo robótico, proporcionando una infraestructura de comunicación entre nodos, herramientas de visualización y una extensa colección de paquetes para navegación, percepción y control \citep{quigley2009ros}. Complementariamente, Gazebo ofrece un entorno de simulación tridimensional con física realista que permite validar algoritmos sin los costos y riesgos asociados a la experimentación con hardware real \citep{koenig2004gazebo}.
+
+Este proyecto integrador tiene como objetivo implementar un pipeline completo de navegación autónoma para un robot móvil diferencial en un entorno cerrado simulado (almacén), abarcando desde el diseño del modelo cinemático hasta la ejecución de navegación basada en costmaps. Las tres tareas que conforman el proyecto —mapeo con Gmapping, localización con AMCL y navegación con el Navigation Stack— se ejecutan de manera secuencial, compartiendo un mismo mapa como elemento unificador \citep{marder2010office}.
+
+El documento se organiza de la siguiente manera: la Sección~\ref{sec:desarrollo} constituye el núcleo del trabajo, presentando en la Subsección~\ref{sec:diseno} el diseño del robot y su cinemática, en la Subsección~\ref{sec:gmapping} la tarea de mapeo con Gmapping, en la Subsección~\ref{sec:amcl} la localización con AMCL, y en la Subsección~\ref{sec:navstack} la navegación con el Navigation Stack. La Sección~\ref{sec:arquitectura} presenta el diagrama de arquitectura del sistema ROS completo. Finalmente, la Sección~\ref{sec:conclusiones} expone las conclusiones y el trabajo futuro.
+
+% ============================================================
+% DESARROLLO
+% ============================================================
+\section{Desarrollo}
+\label{sec:desarrollo}
+
+% ============================================================
+% 10.1 DEFINICIÓN DEL PROBLEMA Y DISEÑO DEL ROBOT
+% ============================================================
+\subsection{Definición del Problema y Diseño del Robot}
+\label{sec:diseno}
+
+\subsubsection{Planteamiento del Problema}
+\label{sec:problema}
+
+Se plantea el problema de navegación autónoma para un robot móvil en un entorno cerrado desconocido, específicamente un almacén simulado con paredes, pasillos y obstáculos estáticos. El robot debe ser capaz de: (1) explorar el entorno y construir un mapa de rejilla de ocupación sin conocimiento \textit{a priori} del mismo, (2) localizarse dentro del mapa generado a partir de observaciones sensoriales, y (3) navegar de manera autónoma hacia puntos objetivo definidos por el usuario, evadiendo obstáculos en el camino.
+
+La elección de un robot de tracción diferencial frente a alternativas como la configuración Ackerman (vehicular) o la omnidireccional responde a criterios técnicos y de adecuación al entorno. El robot diferencial ofrece menor complejidad mecánica (dos motores independientes), control cinemático simple basado en velocidades lineales y angulares, y alta maniobrabilidad en espacios reducidos, características ideales para navegación en interiores \citep{siegwart2011introduction}. A diferencia del robot Ackerman, el diferencial permite giros en el lugar (\textit{zero-radius turn}), lo que simplifica las maniobras en pasillos estrechos. En comparación con robots omnidireccionales, el diferencial tiene menor costo computacional de control y simplicidad mecánica, aunque presenta limitaciones en movimiento lateral.
+
+\subsubsection{Cinemática del Robot Diferencial}
+\label{sec:cinematica}
+
+El modelo cinemático del robot diferencial establece la relación entre las velocidades angulares de las ruedas motrices y la velocidad lineal y angular del centro del robot \citep{siegwart2011introduction}. Para un robot con radio de ruedas $r$ y distancia entre ruedas (baseline) $L$, la cinemática directa se expresa mediante las ecuaciones \eqref{eq:directa_v} y \eqref{eq:directa_w}:
+
+\begin{equation}
+    v = \frac{(\omega_r + \omega_l) \cdot r}{2}
+    \label{eq:directa_v}
+\end{equation}
+
+\begin{equation}
+    \omega = \frac{(\omega_r - \omega_l) \cdot r}{L}
+    \label{eq:directa_w}
+\end{equation}
+
+donde $\omega_r$ y $\omega_l$ son las velocidades angulares de las ruedas derecha e izquierda respectivamente (en rad/s). La formulación matricial del modelo se presenta en \eqref{eq:jacobiano}:
+
+\begin{equation}
+    \begin{bmatrix}
+        v \\
+        \omega
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        \frac{r}{2} & \frac{r}{2} \\[6pt]
+        \frac{r}{L} & -\frac{r}{L}
+    \end{bmatrix}
+    \begin{bmatrix}
+        \omega_r \\
+        \omega_l
+    \end{bmatrix}
+    \label{eq:jacobiano}
+\end{equation}
+
+La cinemática inversa, que permite obtener las velocidades de las ruedas a partir de la velocidad deseada del robot, se define en \eqref{eq:inversa}:
+
+\begin{equation}
+    \omega_r = \frac{2v + \omega L}{2r}, \qquad
+    \omega_l = \frac{2v - \omega L}{2r}
+    \label{eq:inversa}
+\end{equation}
+
+El robot diseñado utiliza los parámetros físicos listados en la Tabla~\ref{tab:param_fisicos}, que se encuentran dentro de los rangos típicos para robots móviles de interior.
+
+\begin{table}[H]
+    \centering
+    \caption{Parámetros físicos del robot diferencial.}
+    \label{tab:param_fisicos}
+    \begin{tabular}{lccr}
+        \hline
+        \textbf{Parámetro} & \textbf{Valor} & \textbf{Unidad} & \textbf{Rango típico} \\
+        \hline
+        Masa del chasis ($m$) & 3.0 & kg & 2--5 \\
+        Radio de ruedas ($r$) & 0.075 & m & 0.05--0.10 \\
+        Baseline ($L$) & 0.35 & m & 0.20--0.35 \\
+        Altura del LiDAR & 0.08 & m (sobre base) & -- \\
+        Distancia LiDAR al centro & 0.15 & m (adelante) & -- \\
+        Rozamiento ($\mu$) & 1.0 & -- & -- \\
+        Coef. de amortiguación & 0.1 & N·s/m & -- \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Las limitaciones inherentes al diseño diferencial se resumen en la Tabla~\ref{tab:limitaciones}.
+
+\begin{table}[H]
+    \centering
+    \caption{Limitaciones del robot diferencial.}
+    \label{tab:limitaciones}
+    \begin{tabular}{lp{8cm}}
+        \hline
+        \textbf{Limitación} & \textbf{Implicación} \\
+        \hline
+        Sin movimiento lateral & Requiere maniobras de tres puntos para estacionamiento lateral \\
+        Deslizamiento en curvas cerradas & Error de odometría acumulativo que requiere corrección probabilística \\
+        Singularidad en $v = 0$ & Imposibilidad de girar sobre el eje con precisión infinitesimal \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{Modelo URDF en Simulación}
+\label{sec:urdf}
+
+El modelo unificado del robot se define en formato URDF (Unified Robot Description Format), compatible con ROS y Gazebo. La estructura comprende cinco \textit{links} y cuatro \textit{joints}, organizados según la especificación de la Tabla~\ref{tab:links}.
+
+\begin{table}[H]
+    \centering
+    \caption{Especificación de \textit{links} del modelo URDF.}
+    \label{tab:links}
+    \begin{tabular}{lccc}
+        \hline
+        \textbf{Link} & \textbf{Geometría} & \textbf{Dimensiones (m)} & \textbf{Masa (kg)} \\
+        \hline
+        \texttt{base\_link} & Caja (box) & $0.40 \times 0.30 \times 0.15$ & 3.0 \\
+        \texttt{left\_wheel\_link} & Cilindro & $r=0.075$, $h=0.04$ & 0.3 \\
+        \texttt{right\_wheel\_link} & Cilindro & $r=0.075$, $h=0.04$ & 0.3 \\
+        \texttt{caster\_wheel\_link} & Esfera & $r=0.025$ & 0.05 \\
+        \texttt{laser\_frame} & Virtual & -- & -- \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Las conexiones entre \textit{links} se establecen mediante \textit{joints} de tipo \texttt{revolute} para las ruedas motrices y \texttt{fixed} para los elementos de soporte y sensor, tal como se detalla en la Tabla~\ref{tab:joints}.
+
+\begin{table}[H]
+    \centering
+    \caption{Especificación de \textit{joints} del modelo URDF.}
+    \label{tab:joints}
+    \begin{tabular}{llll}
+        \hline
+        \textbf{Joint} & \textbf{Tipo} & \textbf{Parent $\rightarrow$ Child} & \textbf{Origen (xyz)} \\
+        \hline
+        \texttt{base\_to\_left\_wheel} & \texttt{revolute} & \texttt{base\_link $\rightarrow$ left\_wheel\_link} & $(0, 0.175, 0)$ \\
+        \texttt{base\_to\_right\_wheel} & \texttt{revolute} & \texttt{base\_link $\rightarrow$ right\_wheel\_link} & $(0, -0.175, 0)$ \\
+        \texttt{base\_to\_caster} & \texttt{fixed} & \texttt{base\_link $\rightarrow$ caster\_wheel\_link} & $(-0.15, 0, -0.04)$ \\
+        \texttt{base\_to\_laser} & \texttt{fixed} & \texttt{base\_link $\rightarrow$ laser\_frame} & $(0.15, 0, 0.08)$ \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Para la simulación en Gazebo, se configuran dos \textit{transmissions} que conectan los \textit{joints} rotacionales con la interfaz de velocidad del simulador. El fragmento URDF correspondiente a la transmisión de la rueda izquierda se muestra en el Listado~\ref{lst:transmission}. Adicionalmente, se emplea el plugin \texttt{libgazebo\_ros\_diff\_drive.so} para el control diferencial y \texttt{libgazebo\_ros\_laser.so} para el sensor LiDAR.
+
+\begin{lstlisting}[caption={Transmisión URDF para rueda izquierda.}, label={lst:transmission}, style=xmlstyle]
+<transmission name="trans_left_wheel">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="base_to_left_wheel">
+    <hardwareInterface>VelocityJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="motor_left">
+    <hardwareInterface>VelocityJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+\end{lstlisting}
+
+\subsubsection{Sensor LiDAR: Especificaciones y Configuración}
+\label{sec:lidar}
+
+El sensor LiDAR simulado en Gazebo corresponde a un láser 2D de rayos, con especificaciones técnicas que emulan sensores comerciales como el Hokuyo URG-04LX o el SICK LMS1xx \citep{siegwart2011introduction}. La Tabla~\ref{tab:lidar_spec} resume los parámetros de configuración.
+
+\begin{table}[H]
+    \centering
+    \caption{Especificaciones técnicas del sensor LiDAR simulado.}
+    \label{tab:lidar_spec}
+    \begin{tabular}{lcl}
+        \hline
+        \textbf{Parámetro} & \textbf{Valor} & \textbf{Equivalente real} \\
+        \hline
+        Tipo & Láser 2D de rayos & Hokuyo URG-04LX / SICK LMS1xx \\
+        Rango mínimo & 0.10 m & 0.1 m \\
+        Rango máximo & 10.0 m & 5.6 m (Hokuyo) / 20 m (SICK) \\
+        Ángulo de apertura & 180° (configurable a 270°) & 240° (Hokuyo) / 270° (SICK) \\
+        Resolución angular & 1° (360 muestras) & 0.36° (Hokuyo) / 0.5° (SICK) \\
+        Frecuencia & 20 Hz & 10 Hz (Hokuyo) / 25 Hz (SICK) \\
+        Ruido & Gaussiano $\sigma = 0.01$ m & Idealización en simulación \\
+        Tópico ROS & \texttt{/scan} & -- \\
+        Frame & \texttt{laser\_frame} & -- \\
+        \hline
+    \end{tabular}
+\end{table}
+
+La configuración del LiDAR en Gazebo se realiza mediante el plugin \texttt{libgazebo\_ros\_laser.so}, especificando el ángulo de barrido, la resolución, el rango y el modelo de ruido gaussiano, como se ilustra en el Listado~\ref{lst:lidar_plugin}.
+
+\begin{lstlisting}[caption={Plugin LiDAR en Gazebo.}, label={lst:lidar_plugin}, style=xmlstyle]
+<gazebo reference="laser_frame">
+  <sensor type="ray" name="head_laser">
+    <pose>0 0 0 0 0 0</pose>
+    <update_rate>20</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>360</samples>
+          <resolution>1.0</resolution>
+          <min_angle>-1.5708</min_angle>
+          <max_angle>1.5708</max_angle>
+        </horizontal>
+      </scan>
+      <range>
+        <min>0.10</min>
+        <max>10.0</max>
+        <resolution>0.01</resolution>
+      </range>
+      <noise>
+        <type>gaussian</type>
+        <mean>0.0</mean>
+        <stddev>0.01</stddev>
+      </noise>
+    </ray>
+    <plugin name="laser_node" filename="libgazebo_ros_laser.so">
+      <topicName>scan</topicName>
+      <frameName>laser_frame</frameName>
+    </plugin>
+  </sensor>
+</gazebo>
+\end{lstlisting}
+
+% ============================================================
+% 10.2 TAREA 1: MAPEO CON GMAPPING
+% ============================================================
+\subsection{Tarea 1: Mapeo con Gmapping}
+\label{sec:gmapping}
+
+\subsubsection{Fundamento Teórico: SLAM Basado en Partículas}
+
+El problema de SLAM (Simultaneous Localization and Mapping) consiste en estimar simultáneamente la trayectoria del robot y el mapa del entorno a partir de observaciones sensoriales y comandos de control \citep{thrun2005probabilistic}. Formalmente, se busca estimar la distribución de probabilidad conjunta $p(x_{1:t}, m \mid z_{1:t}, u_{1:t})$, donde $x_{1:t}$ es la trayectoria del robot, $m$ es el mapa, $z_{1:t}$ son las observaciones y $u_{1:t}$ los comandos de control.
+
+Gmapping implementa el enfoque Rao-Blackwellized Particle Filter (RBPF) para SLAM \citep{grisetti2007improved}. La descomposición Rao-Blackwellizada factoriza el problema como:
+
+\begin{equation}
+    p(x_{1:t}, m \mid z_{1:t}, u_{1:t}) = p(m \mid x_{1:t}, z_{1:t}) \cdot p(x_{1:t} \mid z_{1:t}, u_{1:t})
+    \label{eq:rbpf}
+\end{equation}
+
+En esta formulación, cada partícula representa una trayectoria hipotética del robot y mantiene su propio mapa de rejilla de ocupación condicionado a dicha trayectoria \citep{montemerlo2007fastslam}. El algoritmo procede mediante los siguientes pasos:
+
+\begin{enumerate}
+    \item \textbf{Muestreo}: Se genera una nueva generación de partículas a partir de la distribución de importancia, que combina el modelo de movimiento del robot con la observación más reciente.
+    \item \textbf{Actualización del mapa}: Para cada partícula, se actualiza el mapa de rejilla de ocupación basado en la trayectoria y las observaciones.
+    \item \textbf{Re-muestreo adaptativo}: Cuando el número efectivo de partículas $N_{\text{eff}}$ cae por debajo de un umbral (típicamente $N_{\text{eff}} < N/2$), se realiza un re-muestreo para eliminar partículas con baja probabilidad y duplicar aquellas con alta probabilidad.
+\end{enumerate}
+
+El modelo de probabilidad del escaneo LiDAR empleado por Gmapping asume que cada medición de rango es independiente, modelando la probabilidad $p(z_t \mid x_t, m)$ como una combinación de componentes: acierto (distribución gaussiana alrededor del rango esperado), mediciones cortas (distribución exponencial), mediciones máximas y mediciones aleatorias \citep{thrun2005probabilistic}.
+
+\subsubsection{Configuración del Paquete Gmapping}
+
+La configuración del nodo \texttt{slam\_gmapping} se realiza mediante el archivo de parámetros YAML especificado en la Tabla~\ref{tab:gmapping_params}. Se han seleccionado 22 parámetros que abarcan las cuatro categorías principales del algoritmo: filtro de partículas, resolución del mapa, modelo de odometría, umbrales de actualización y modelo de sensor.
+
+\begin{table}[H]
+    \centering
+    \caption{Parámetros de configuración de Gmapping.}
+    \label{tab:gmapping_params}
+    \small
+    \begin{tabular}{llc}
+        \hline
+        \textbf{Parámetro} & \textbf{Valor} & \textbf{Categoría} \\
+        \hline
+        \texttt{particles} & 80 & Filtro de partículas \\
+        \texttt{delta} & 0.05 m/celda & Resolución del mapa \\
+        \texttt{xmin}, \texttt{ymin} & $-10.0$, $-10.0$ & Límites del mapa \\
+        \texttt{xmax}, \texttt{ymax} & $10.0$, $10.0$ & Límites del mapa \\
+        \texttt{srr} & 0.01 & Ruido odometría (rot/rot) \\
+        \texttt{srt} & 0.02 & Ruido odometría (rot/tras) \\
+        \texttt{str} & 0.01 & Ruido odometría (tras/rot) \\
+        \texttt{stt} & 0.02 & Ruido odometría (tras/tras) \\
+        \texttt{linearUpdate} & 1.0 m & Umbral de actualización lineal \\
+        \texttt{angularUpdate} & 0.5 rad & Umbral de actualización angular \\
+        \texttt{temporalUpdate} & 3.0 s & Actualización forzada temporal \\
+        \texttt{resampleThreshold} & 0.5 & Umbral de re-muestreo \\
+        \texttt{maxUrange} & 8.0 m & Rango máx. para el mapa \\
+        \texttt{sigma} & 0.05 m & Desv. estándar del escaneo \\
+        \texttt{kernelSize} & 1 & Tamaño del kernel de búsqueda \\
+        \texttt{lstep} & 0.05 & Paso lineal para correlación \\
+        \texttt{astep} & 0.05 & Paso angular para correlación \\
+        \texttt{iterations} & 5 & Iteraciones de scan-matching \\
+        \texttt{lsigma} & 0.075 & Sigma para likelihood \\
+        \texttt{ogain} & 3.0 & Ganancia para re-muestreo \\
+        \texttt{llsamplerange} / \texttt{llsamplestep} & 0.01 / 0.01 & Muestreo likelihood (lineal) \\
+        \texttt{lasamplerange} / \texttt{lasamplestep} & 0.005 / 0.005 & Muestreo likelihood (angular) \\
+        \hline
+    \end{tabular}
+\end{table}
+
+La justificación de los parámetros más críticos se presenta en la Tabla~\ref{tab:gmapping_just}.
+
+\begin{table}[H]
+    \centering
+    \caption{Justificación de parámetros clave de Gmapping.}
+    \label{tab:gmapping_just}
+    \begin{tabular}{lp{8cm}}
+        \hline
+        \textbf{Parámetro} & \textbf{Fundamento} \\
+        \hline
+        \texttt{particles}=80 & Suficiente para entorno pequeño ($\sim10\times10$ m). Cada partícula tiene su propio mapa; 80 partículas dan buena cobertura sin saturar CPU. \\
+        \texttt{delta}=0.05 & Resolución estándar para interiores. Un ambiente de $10\times10$ m produce un mapa de $200\times200$ celdas. \\
+        \texttt{linearUpdate}=1.0 & Actualiza el mapa cada metro recorrido. Reduce computación comparado con 0.5 m. \\
+        \texttt{angularUpdate}=0.5 & Actualiza al girar $\sim28.6^\circ$. Suficiente para corregir deriva angular. \\
+        \texttt{srr}=0.01 a 0.02 & Modelo de odometría conservador (poco ruido). Ideal para simulación donde la odometría es más precisa que en hardware real. \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{Procedimiento Experimental}
+
+El procedimiento para la ejecución de la tarea de mapeo sigue el pipeline secuencial definido en el ADR-008 \citep{marder2010office} y se describe a continuación:
+
+\begin{enumerate}
+    \item \textbf{Lanzamiento del entorno}: Se ejecuta \texttt{roslaunch robot\_gazebo robot.launch}, que inicia Gazebo con el entorno de almacén y el robot URDF.
+    \item \textbf{Lanzamiento de Gmapping}: Se ejecuta el nodo \texttt{slam\_gmapping} con los parámetros de la Tabla~\ref{tab:gmapping_params}. Esto puede realizarse mediante un \textit{launch file} que cargue el archivo YAML correspondiente.
+    \item \textbf{Teleoperación}: Se utiliza \texttt{teleop\_twist\_keyboard} para teleoperar el robot cubriendo sistemáticamente todo el entorno, asegurando que cada área sea observada desde múltiples ángulos para facilitar el cierre de bucles.
+    \item \textbf{Guardado del mapa}: Una vez completada la exploración, se ejecuta \texttt{rosrun map\_server map\_saver -f $\sim$/maps/mapa\_final}, que genera dos archivos: \texttt{mapa\_final.pgm} (imagen en formato PGM con probabilidades de ocupación) y \texttt{mapa\_final.yaml} (metadatos del mapa).
+\end{enumerate}
+
+El formato de salida del mapa se especifica en el archivo YAML generado (Listado~\ref{lst:map_yaml}).
+
+\begin{lstlisting}[caption={Archivo de metadatos del mapa generado (\texttt{mapa\_final.yaml}).}, label={lst:map_yaml}, style=yamlstyle]
+image: mapa_final.pgm
+resolution: 0.050000
+origin: [-10.0, -10.0, 0.0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+\end{lstlisting}
+
+\subsubsection{Resultados Esperados}
+
+Se espera que el mapa resultante presente bordes bien definidos correspondientes a las paredes del entorno, con una cobertura superior al 90\% del área explorable. El cierre de bucles (\textit{loop closure}) debe manifestarse cuando el robot retorna a una posición previamente visitada, corrigiendo la deriva acumulada de la odometría. Cuantitativamente, se espera un tiempo de exploración de 2--5 minutos para un entorno de $10\times10$ m, generando un mapa de aproximadamente $200\times200$ celdas con una resolución de 5 cm.
+
+En comparación con alternativas como Hector SLAM (que no requiere odometría pero demanda LiDAR de alta frecuencia) o EKF-SLAM (que mantiene una representación de landmarks en lugar de rejilla), Gmapping ofrece el mejor balance para entornos interiores con odometría disponible \citep{grisetti2007improved}.
+
+% ============================================================
+% 10.3 TAREA 2: LOCALIZACIÓN CON AMCL
+% ============================================================
+\subsection{Tarea 2: Localización con AMCL}
+\label{sec:amcl}
+
+\subsubsection{Fundamento Teórico: Filtro de Partículas Adaptativo}
+
+La localización probabilística aborda el problema de estimar la pose del robot $x_t = (x, y, \theta)$ dado un mapa conocido $m$, las observaciones $z_{1:t}$ y los comandos de control $u_{1:t}$ \citep{thrun2005probabilistic}. AMCL (Adaptive Monte Carlo Localization) implementa un filtro de partículas con muestreo adaptativo basado en KLD (Kullback-Leibler Divergence), introducido por \citet{fox2003adapting}.
+
+El algoritmo KLD-sampling ajusta dinámicamente el número de partículas $n$ según la distribución de probabilidad estimada:
+
+\begin{equation}
+    n = \frac{1}{2\epsilon} \chi^2_{k-1, 1-\delta}
+    \label{eq:kld}
+\end{equation}
+
+donde $\epsilon$ es el error máximo permitido (parámetro \texttt{kld\_err}), $1-\delta$ es la probabilidad de que el error esté dentro de $\epsilon$, y $k$ es el número de bins (intervalos discretos del espacio de estados) que contienen al menos una partícula. Esta expresión garantiza que la divergencia de Kullback-Leibler entre la distribución de partículas y la distribución real sea menor que $\epsilon$ con probabilidad $1-\delta$ \citep{fox2003adapting}.
+
+Cuando el robot tiene alta incertidumbre (localización global o recuperación de secuestro), $k$ es grande y $n$ se aproxima a \texttt{max\_particles} (5000). Cuando converge, $k$ se reduce y $n$ tiende a \texttt{min\_particles} (500), optimizando el costo computacional.
+
+El modelo de sensor empleado es \texttt{likelihood\_field}, que evalúa la verosimilitud de una medición observada $z_t^k$ contra el campo de distancia precomputado del mapa \citep{thrun2005probabilistic}:
+
+\begin{equation}
+    p(z_t^k \mid x_t, m) = z_{\text{hit}} \cdot \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{d^2}{2\sigma^2}\right) + \frac{z_{\text{rand}}}{z_{\text{max}}}
+    \label{eq:likelihood}
+\end{equation}
+
+donde $d$ es la distancia desde el punto de impacto del rayo hasta el obstáculo más cercano en el mapa, $\sigma$ es la desviación estándar (\texttt{laser\_sigma\_hit}) y $z_{\text{hit}}$, $z_{\text{rand}}$ son los pesos de los componentes de acierto y aleatorio respectivamente.
+
+\subsubsection{Configuración del Paquete AMCL}
+
+La configuración completa de AMCL comprende 24 parámetros organizados en cinco categorías, tal como se detalla en la Tabla~\ref{tab:amcl_params}.
+
+\begin{table}[H]
+    \centering
+    \caption{Parámetros de configuración de AMCL.}
+    \label{tab:amcl_params}
+    \small
+    \begin{tabular}{llc}
+        \hline
+        \textbf{Parámetro} & \textbf{Valor} & \textbf{Categoría} \\
+        \hline
+        \texttt{min\_particles} & 500 & Filtro de partículas \\
+        \texttt{max\_particles} & 5000 & Filtro de partículas \\
+        \texttt{kld\_err} & 0.01 & KLD sampling ($\epsilon$) \\
+        \texttt{kld\_z} & 0.99 & KLD sampling ($\delta$) \\
+        \texttt{update\_min\_d} & 0.25 m & Re-muestreo \\
+        \texttt{update\_min\_a} & 0.2 rad & Re-muestreo \\
+        \texttt{resample\_interval} & 1 & Re-muestreo \\
+        \texttt{odom\_model\_type} & \texttt{diff} & Modelo de odometría \\
+        \texttt{odom\_alpha1} & 0.2 & Ruido odometría \\
+        \texttt{odom\_alpha2} & 0.2 & Ruido odometría \\
+        \texttt{odom\_alpha3} & 0.2 & Ruido odometría \\
+        \texttt{odom\_alpha4} & 0.2 & Ruido odometría \\
+        \texttt{odom\_alpha5} & 0.1 & Ruido odometría \\
+        \texttt{laser\_model\_type} & \texttt{likelihood\_field} & Modelo de sensor \\
+        \texttt{laser\_z\_hit} & 0.95 & Sensor: peso de acierto \\
+        \texttt{laser\_z\_rand} & 0.05 & Sensor: peso aleatorio \\
+        \texttt{laser\_sigma\_hit} & 0.2 m & Sensor: desviación estándar \\
+        \texttt{laser\_lambda\_short} & 0.1 & Sensor: tasa corta \\
+        \texttt{laser\_max\_beams} & 60 & Sensor: muestreo de beams \\
+        \texttt{initial\_cov\_xx}/\texttt{yy} & 0.5 & Covarianza inicial \\
+        \texttt{initial\_cov\_aa} & 0.5 & Covarianza inicial \\
+        \texttt{recovery\_alpha\_slow} & 0.001 & Recuperación de fallos \\
+        \texttt{recovery\_alpha\_fast} & 0.1 & Recuperación de fallos \\
+        \texttt{save\_pose\_rate} & 0.5 Hz & Persistencia \\
+        \hline
+    \end{tabular}
+\end{table}
+
+La justificación de los parámetros más relevantes se presenta en la Tabla~\ref{tab:amcl_just}.
+
+\begin{table}[H]
+    \centering
+    \caption{Justificación de parámetros clave de AMCL.}
+    \label{tab:amcl_just}
+    \begin{tabular}{lp{8cm}}
+        \hline
+        \textbf{Parámetro} & \textbf{Fundamento} \\
+        \hline
+        \texttt{min\_particles}=500 & KLD-sampling reduce partículas al converger. 500 es mínimo para mantener diversidad suficiente. \\
+        \texttt{max\_particles}=5000 & Para localización global se necesitan $\sim$5000 partículas. Al converger, KLD reduce a $\sim$500. \\
+        \texttt{laser\_model\_type}=likelihood\_field & En simulación, el campo de verosimilitud es más estable que \texttt{beam} porque no hay discrepancias geométricas reales \citep{fox2003adapting}. \\
+        \texttt{laser\_z\_hit}=0.95 & Alta confianza en el sensor (simulación ideal). En hardware real se reduciría a $\sim$0.8. \\
+        \texttt{update\_min\_d}=0.25 & Re-muestreo cada 25 cm. Balance entre precisión y costo computacional. \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{Procedimiento Experimental}
+
+El procedimiento para la localización se ejecuta después de haber completado la Tarea 1 y contar con el mapa guardado:
+
+\begin{enumerate}
+    \item \textbf{Lanzamiento del entorno}: Se ejecuta \texttt{roslaunch robot\_gazebo robot.launch} con el robot ubicado en una pose conocida dentro del entorno.
+    \item \textbf{Carga del mapa}: Se ejecuta \texttt{rosrun map\_server map\_server $\sim$/maps/mapa\_final.yaml}, que publica el mapa en el tópico \texttt{/map}.
+    \item \textbf{Lanzamiento de AMCL}: Se ejecuta el nodo \texttt{amcl} con los parámetros de la Tabla~\ref{tab:amcl_params}, ya sea directamente o mediante un \textit{launch file}.
+    \item \textbf{Inicialización de la pose}: En RViz, se utiliza la herramienta ``2D Pose Estimate'' para publicar la pose inicial estimada en el tópico \texttt{/initialpose}. AMCL recibe esta estimación y distribuye las partículas alrededor de la pose proporcionada.
+    \item \textbf{Convergencia}: Se observa la nube de partículas (\texttt{/particlecloud}) en RViz. A medida que el robot se desplaza, las partículas convergen hacia la pose real, indicando que la localización es exitosa.
+\end{enumerate}
+
+\subsubsection{Resultados Esperados}
+
+Se espera que el filtro de partículas converja en menos de 10 segundos cuando se proporciona una pose inicial aproximada (localización local), y en menos de 30 segundos para localización global sin pose inicial. La nube de partículas debe visualizarse como un grupo denso alrededor de la pose real del robot, con una covarianza que refleje la incertidumbre del sistema. La robustez del algoritmo ante errores de odometría se manifiesta en la capacidad de mantener la localización incluso cuando el robot experimenta deslizamiento simulado.
+
+% ============================================================
+% 10.4 TAREA 3: NAVEGACIÓN CON NAVIGATION STACK
+% ============================================================
+\subsection{Tarea 3: Navegación con Navigation Stack}
+\label{sec:navstack}
+
+\subsubsection{Fundamento Teórico: Algoritmo A*}
+
+El planificador global del Navigation Stack utiliza el algoritmo A* para encontrar la trayectoria óptima desde la pose actual del robot hasta el punto objetivo, sobre el mapa de rejilla de ocupación \citep{hart1968formal}. A* combina el costo real del camino recorrido $g(n)$ con una heurística estimada $h(n)$ para guiar la búsqueda:
+
+\begin{equation}
+    f(n) = g(n) + h(n)
+    \label{eq:astar}
+\end{equation}
+
+donde $n$ es un nodo de la rejilla, $g(n)$ es el costo acumulado desde el inicio hasta $n$, y $h(n)$ es la distancia euclidiana desde $n$ hasta la meta, que constituye una heurística admisible (no sobrestima el costo real). La optimalidad de A* está garantizada cuando la heurística es admisible y consistente \citep{hart1968formal}. La configuración utilizada para el planificador global se detalla en la Tabla~\ref{tab:global_planner}.
+
+\begin{table}[H]
+    \centering
+    \caption{Configuración del planificador global (NavFn / A*).}
+    \label{tab:global_planner}
+    \begin{tabular}{lc}
+        \hline
+        \textbf{Parámetro} & \textbf{Valor} \\
+        \hline
+        \texttt{allow\_unknown} & \texttt{false} \\
+        \texttt{default\_tolerance} & 0.2 m \\
+        \texttt{use\_dijkstra} & \texttt{false} (usa A*) \\
+        \texttt{use\_quadratic} & \texttt{true} \\
+        \texttt{use\_grid\_path} & \texttt{false} (trayectoria suavizada) \\
+        \texttt{lethal\_cost} & 100 \\
+        \texttt{neutral\_cost} & 50 \\
+        \texttt{cost\_factor} & 3.0 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{Fundamento Teórico: Dynamic Window Approach (DWA)}
+
+El planificador local implementa el Dynamic Window Approach (DWA), introducido por \citet{fox1997dynamic}, que genera comandos de velocidad $(v, \omega)$ considerando únicamente las velocidades alcanzables dentro de un intervalo de tiempo $t$ (ventana dinámica) dado el modelo de aceleración del robot.
+
+El espacio de búsqueda se restringe a velocidades que satisfacen tres condiciones: (1) \textbf{velocidades alcanzables} dentro de la ventana dinámica dadas las aceleraciones máximas; (2) \textbf{velocidades admisibles} que permitan detenerse antes de colisionar; y (3) \textbf{velocidades permitidas} dentro de los límites establecidos. Para cada par $(v, \omega)$ muestreado, se simula una trayectoria durante un horizonte temporal $\Delta t$ y se evalúa mediante la función objetivo:
+
+\begin{equation}
+    G(v, \omega) = \alpha \cdot \text{path\_dist}(v, \omega) + \beta \cdot \text{goal\_dist}(v, \omega) + \gamma \cdot \text{occ\_dist}(v, \omega)
+    \label{eq:dwa}
+\end{equation}
+
+donde:
+
+\begin{itemize}
+    \item $\text{path\_dist}(v, \omega)$: distancia a la trayectoria global más cercana (peso $\alpha=32$).
+    \item $\text{goal\_dist}(v, \omega)$: distancia euclidiana al punto meta (peso $\beta=24$).
+    \item $\text{occ\_dist}(v, \omega)$: distancia al obstáculo más cercano (peso $\gamma=0.02$).
+\end{itemize}
+
+La configuración completa del planificador local DWA se presenta en la Tabla~\ref{tab:dwa_params}.
+
+\begin{table}[H]
+    \centering
+    \caption{Parámetros del planificador local DWA.}
+    \label{tab:dwa_params}
+    \small
+    \begin{tabular}{llc}
+        \hline
+        \textbf{Parámetro} & \textbf{Valor} & \textbf{Categoría} \\
+        \hline
+        \texttt{max\_vel\_x} & 0.55 m/s & Límites de velocidad \\
+        \texttt{min\_vel\_x} & $-0.10$ m/s & Límites de velocidad \\
+        \texttt{max\_vel\_theta} & 1.0 rad/s & Límites de velocidad \\
+        \texttt{min\_in\_place\_vel\_theta} & 0.5 rad/s & Límites de velocidad \\
+        \texttt{acc\_lim\_x} & 2.5 m/s$^2$ & Aceleraciones \\
+        \texttt{acc\_lim\_theta} & 3.2 rad/s$^2$ & Aceleraciones \\
+        \texttt{sim\_time} & 1.5 s & Ventana de simulación \\
+        \texttt{vx\_samples} & 6 & Muestreo de velocidades \\
+        \texttt{vtheta\_samples} & 20 & Muestreo de velocidades \\
+        \texttt{path\_distance\_bias} ($\alpha$) & 32.0 & Función objetivo \\
+        \texttt{goal\_distance\_bias} ($\beta$) & 24.0 & Función objetivo \\
+        \texttt{occdist\_scale} ($\gamma$) & 0.02 & Función objetivo \\
+        \texttt{xy\_goal\_tolerance} & 0.10 m & Tolerancias \\
+        \texttt{yaw\_goal\_tolerance} & 0.05 rad & Tolerancias \\
+        \texttt{controller\_frequency} & 10.0 Hz & Controlador \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{Configuración de Costmaps}
+
+El sistema de costmaps gestiona la representación de obstáculos para la planificación. Se emplean dos costmaps: uno global (mapa completo) y uno local (ventana centrada en el robot). La configuración común a ambos se define en la Tabla~\ref{tab:costmap_common}.
+
+\begin{table}[H]
+    \centering
+    \caption{Parámetros comunes de costmaps.}
+    \label{tab:costmap_common}
+    \begin{tabular}{lc}
+        \hline
+        \textbf{Parámetro} & \textbf{Valor} \\
+        \hline
+        \texttt{obstacle\_range} & 3.5 m \\
+        \texttt{raytrace\_range} & 4.0 m \\
+        \texttt{inflation\_radius} & 0.40 m \\
+        \texttt{cost\_scaling\_factor} & 5.0 \\
+        \texttt{observation\_sources} & \texttt{laser\_scan\_sensor} \\
+        \texttt{laser\_scan\_sensor.topic} & \texttt{/scan} \\
+        \texttt{expected\_update\_rate} & 20.0 Hz \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Las configuraciones específicas de cada costmap se detallan en la Tabla~\ref{tab:costmaps}.
+
+\begin{table}[H]
+    \centering
+    \caption{Configuración diferencial de costmaps global y local.}
+    \label{tab:costmaps}
+    \begin{tabular}{lcc}
+        \hline
+        \textbf{Parámetro} & \textbf{Global} & \textbf{Local} \\
+        \hline
+        \texttt{global\_frame} & \texttt{map} & \texttt{odom} \\
+        \texttt{update\_frequency} & 1.0 Hz & 5.0 Hz \\
+        \texttt{publish\_frequency} & 0.5 Hz & 2.0 Hz \\
+        \texttt{width} $\times$ \texttt{height} & $20\times20$ m & $3\times3$ m \\
+        \texttt{resolution} & 0.05 m & 0.05 m \\
+        \texttt{static\_map} & \texttt{true} & \texttt{false} \\
+        \texttt{rolling\_window} & \texttt{false} & \texttt{true} \\
+        \hline
+    \end{tabular}
+\end{table}
+
+El radio de inflado (\texttt{inflation\_radius}=0.40 m) crea una zona de seguridad alrededor de los obstáculos, penalizando trayectorias que se aproximen demasiado. El factor de escala de costo (\texttt{cost\_scaling\_factor}=5.0) determina la rapidez con que decae la penalización: a 40 cm del obstáculo, el costo adicional es prácticamente nulo.
+
+\subsubsection{Procedimiento Experimental}
+
+El procedimiento para la navegación integra los componentes de las tareas anteriores:
+
+\begin{enumerate}
+    \item \textbf{Inicialización}: Se lanza Gazebo con el entorno y el robot (\texttt{robot.launch}), se carga el mapa (\texttt{map\_server}) y se inicia AMCL con localización convergida.
+    \item \textbf{Lanzamiento de move\_base}: Se ejecuta el nodo \texttt{move\_base} con los archivos de configuración de costmaps y planificadores (global A* + local DWA).
+    \item \textbf{Envío de goal}: En RViz, se utiliza la herramienta ``2D Nav Goal'' para especificar un punto destino. El planificador global calcula la trayectoria óptima, y el planificador local la ejecuta generando comandos de velocidad en \texttt{/cmd\_vel}.
+    \item \textbf{Ejecución y monitoreo}: Se observa en RViz la trayectoria planificada (global) y la trayectoria ejecutada (local). El robot debe alcanzar el objetivo evadiendo obstáculos, y el sistema reporta el estado de la navegación en \texttt{/move\_base/status}.
+\end{enumerate}
+
+\subsubsection{Resultados Esperados}
+
+Se espera que el planificador global A* genere una trayectoria óptima en menos de 100 ms para mapas de $200\times200$ celdas. El planificador local DWA debe ejecutar la trayectoria con suavidad, manteniendo velocidades dentro de los límites establecidos ($v_\text{max}=0.55$ m/s, $\omega_\text{max}=1.0$ rad/s) y evadiendo obstáculos con una distancia de seguridad de 40 cm. La eficiencia de la navegación se mide como la relación entre la distancia recorrida y la distancia euclidiana ideal, esperándose valores cercanos a 1.0 para rutas sin obstáculos y menores pero aceptables para rutas con obstáculos.
+
+% ============================================================
+% DIAGRAMA DE ARQUITECTURA DEL SISTEMA
+% ============================================================
+\section{Diagrama de Arquitectura del Sistema}
+\label{sec:arquitectura}
+
+\subsection{Nodos y Tópicos ROS}
+
+La arquitectura completa del sistema integra los nodos correspondientes a las tres tareas, conectados mediante los tópicos y servicios especificados en la Tabla~\ref{tab:topicos}. El diagrama de flujo de datos (Figura~\ref{fig:arquitectura}) ilustra las interconexiones entre los componentes.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.95\textwidth}
+    \lstset{style=mermaidstyle}
+    \begin{lstlisting}
+flowchart TB
+    subgraph GAZEBO["[Gaz] Gazebo"]
+        GAZ[gazebo-server]
+        DIFF[<b>diff_drive_plugin</b><br/>libgazebo_ros_diff_drive.so]
+        LASER[<b>laser_plugin</b><br/>libgazebo_ros_laser.so]
+        ENV[Entorno .world]
+    end
+
+    subgraph CORE["[ROS] Core ROS"]
+        RSP[robot_state_publisher<br/>URDF->TF]
+        TF[/tf, /tf_static<br/>Transformaciones]
+    end
+
+    subgraph T1["[T1] SLAM"]
+        GMAP[slam_gmapping<br/>Rao-Blackwellized PF]
+        MAP_SAVER[map_saver<br/>map_server]
+        MAP_FILE[(map.pgm + map.yaml)]
+    end
+
+    subgraph T2["[T2] Localizacion"]
+        MAP_SERVER[map_server<br/>carga mapa]
+        AMCL[amcl<br/>KLD-Adaptive PF]
+        PARTICLE[/particlecloud<br/>PoseArray]
+        AMCL_POSE[/amcl_pose<br/>PoseWithCovariance]
+    end
+
+    subgraph T3["[T3] Navegacion"]
+        MV[move_base]
+        subgraph GP[Global Planner]
+            NAVFN[navfn / A*<br/>global_planner]
+            GCOSTMAP[global_costmap<br/>mapa completo]
+        end
+        subgraph LP[Local Planner]
+            DWA[dwa_local_planner<br/>Dynamic Window]
+            LCOSTMAP[local_costmap<br/>ventana 3x3 m]
+        end
+    end
+
+    subgraph UI["[UI] Interfaz"]
+        RVZ[RViz]
+        TELEOP[teleop_twist_keyboard]
+        GOAL_UI[2D Nav Goal]
+    end
+
+    %% Conexiones Gazebo -> Percepcion
+    DIFF --> |/odom| TF
+    DIFF --> |/odom| AMCL
+    LASER --> |/scan| GMAP
+    LASER --> |/scan| AMCL
+    LASER --> |/scan| MV
+
+    %% Conexiones TF
+    RSP --> TF
+    TF --> GMAP
+    TF --> AMCL
+    TF --> MV
+
+    %% T1: SLAM pipeline
+    GMAP --> |/map| MAP_SAVER
+    MAP_SAVER --> MAP_FILE
+
+    %% T2: Localizacion pipeline
+    MAP_FILE --> MAP_SERVER
+    MAP_SERVER --> |/map| AMCL
+    MAP_SERVER --> |/map| MV
+    AMCL --> PARTICLE
+    AMCL --> AMCL_POSE
+    AMCL --> |/amcl_pose| MV
+
+    %% T3: Navegacion pipeline
+    MV --> |/cmd_vel| DIFF
+    MV --> GP
+    MV --> LP
+
+    %% UI
+    RVZ --> |/initialpose| AMCL
+    RVZ --> |/move_base_simple/goal| MV
+    TELEOP --> |/cmd_vel| DIFF
+    GOAL_UI --> MV
+
+    %% Estilos por tarea
+    classDef t1 fill:#d4f1f9,stroke:#0077b6,stroke-width:2px
+    classDef t2 fill:#d5f5e3,stroke:#1a7a42,stroke-width:2px
+    classDef t3 fill:#fdebd0,stroke:#b9770e,stroke-width:2px
+    classDef infra fill:#f0f0f0,stroke:#666,stroke-width:1px
+    classDef ui fill:#e8daef,stroke:#7d3c98,stroke-width:1px
+    class GMAP,MAP_SAVER t1
+    class AMCL,PARTICLE,AMCL_POSE,MAP_SERVER t2
+    class MV,NAVFN,DWA,GCOSTMAP,LCOSTMAP t3
+    class GAZ,DIFF,LASER,ENV,RSP,TF infra
+    class RVZ,TELEOP,GOAL_UI ui
+\end{lstlisting}
+    \end{minipage}
+    \caption{Diagrama de arquitectura ROS del sistema integrado (código Mermaid). Los nodos se agrupan por tarea: T1 (mapeo), T2 (localización), T3 (navegación).}
+    \label{fig:arquitectura}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \caption{Tópicos, servicios y acciones del sistema ROS.}
+    \label{tab:topicos}
+    \small
+    \begin{tabular}{llll}
+        \hline
+        \textbf{Tópico} & \textbf{Tipo} & \textbf{Publicador / Suscriptor} & \textbf{Tarea} \\
+        \hline
+        \texttt{/scan} & \texttt{sensor\_msgs/LaserScan} & Gazebo $\rightarrow$ gmapping, amcl, move\_base & T1, T2, T3 \\
+        \texttt{/tf} & \texttt{tf/tfMessage} & RSP, diff\_drive $\rightarrow$ gmapping, amcl, move\_base & Todas \\
+        \texttt{/tf\_static} & \texttt{tf/tfMessage} & RSP $\rightarrow$ gmapping, amcl, move\_base & Todas \\
+        \texttt{/odom} & \texttt{nav\_msgs/Odometry} & diff\_drive $\rightarrow$ amcl, rviz & Todas \\
+        \texttt{/cmd\_vel} & \texttt{geometry\_msgs/Twist} & teleop/move\_base $\rightarrow$ diff\_drive & Todas \\
+        \texttt{/map} & \texttt{nav\_msgs/OccupancyGrid} & gmapping/map\_server $\rightarrow$ amcl, move\_base & T1, T2, T3 \\
+        \texttt{/initialpose} & \texttt{geometry\_msgs/PoseWithCovarianceStamped} & RViz $\rightarrow$ amcl & T2 \\
+        \texttt{/amcl\_pose} & \texttt{geometry\_msgs/PoseWithCovarianceStamped} & amcl $\rightarrow$ rviz & T2 \\
+        \texttt{/particlecloud} & \texttt{geometry\_msgs/PoseArray} & amcl $\rightarrow$ rviz & T2 \\
+        \texttt{/move\_base\_simple/goal} & \texttt{geometry\_msgs/PoseStamped} & RViz $\rightarrow$ move\_base & T3 \\
+        \texttt{/move\_base/status} & \texttt{actionlib\_msgs/GoalStatusArray} & move\_base $\rightarrow$ rviz & T3 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Árbol de Transformaciones (TF)}
+
+El sistema de transformaciones (TF tree) establece la jerarquía de frames que conecta el mapa global con los componentes del robot. La estructura se define en la Tabla~\ref{tab:tf_tree}.
+
+\begin{table}[H]
+    \centering
+    \caption{Árbol de transformaciones (TF tree).}
+    \label{tab:tf_tree}
+    \begin{tabular}{llll}
+        \hline
+        \textbf{Frame Padre} & \textbf{Frame Hijo} & \textbf{Publicador} & \textbf{Tipo} \\
+        \hline
+        \texttt{map} & \texttt{odom} & \texttt{amcl} & Variable \\
+        \texttt{odom} & \texttt{base\_footprint} & \texttt{robot\_state\_publisher} + \texttt{diff\_drive} & Variable \\
+        \texttt{base\_footprint} & \texttt{base\_link} & \texttt{robot\_state\_publisher} & Fixed ($z=0.075$ m) \\
+        \texttt{base\_link} & \texttt{laser\_frame} & \texttt{robot\_state\_publisher} & Fixed ($x=0.15$, $z=0.08$) \\
+        \texttt{base\_link} & \texttt{left\_wheel\_link} & \texttt{robot\_state\_publisher} & Variable (revolute) \\
+        \texttt{base\_link} & \texttt{right\_wheel\_link} & \texttt{robot\_state\_publisher} & Variable (revolute) \\
+        \texttt{base\_link} & \texttt{caster\_wheel\_link} & \texttt{robot\_state\_publisher} & Fixed \\
+        \hline
+    \end{tabular}
+\end{table}
+
+La transformación \texttt{map $\rightarrow$ odom} es publicada por AMCL y representa la corrección global de la deriva de odometría. El frame \texttt{base\_footprint} es la proyección de \texttt{base\_link} al suelo ($z=0$), simplificando la representación bidimensional del robot \citep{marder2010office}.
+
+% ============================================================
+% CONCLUSIONES
+% ============================================================
+\section{Conclusiones}
+\label{sec:conclusiones}
+
+En el presente proyecto integrador se ha implementado un pipeline completo de navegación autónoma para un robot móvil diferencial en entorno simulado, abarcando las tres tareas fundamentales de la robótica móvil: mapeo, localización y navegación. Se diseñó un modelo URDF del robot con parámetros físicos realistas y se configuró un sensor LiDAR 2D en Gazebo, estableciendo las bases para la experimentación simulada.
+
+La Tarea 1 (mapeo con Gmapping) demuestra la efectividad del filtro de partículas Rao-Blackwellized para la construcción de mapas de rejilla de ocupación en entornos interiores, con una configuración de 80 partículas y resolución de 5 cm que balancea precisión y costo computacional. La Tarea 2 (localización con AMCL) evidencia la robustez del KLD-sampling adaptativo, que ajusta dinámicamente el número de partículas entre 500 y 5000 según la incertidumbre del sistema, utilizando el modelo de sensor \texttt{likelihood\_field} para una convergencia estable en simulación.
+
+La Tarea 3 (navegación con Navigation Stack) integra los componentes anteriores, combinando el planificador global A* con el planificador local DWA para generar trayectorias óptimas y ejecutarlas con evasión de obstáculos. La configuración paramétrica detallada en este documento, incluyendo los pesos $\alpha=32$, $\beta=24$, $\gamma=0.02$ de la función objetivo DWA y el radio de inflado de 0.40 m, proporciona un punto de partida validado para experimentación.
+
+Las limitaciones identificadas incluyen la dependencia de un mapeo de calidad para el éxito de las tareas posteriores (ADR-004), la ausencia de obstáculos dinámicos en la simulación y las restricciones cinemáticas propias del robot diferencial. Como trabajo futuro, se propone: (1) incorporar obstáculos dinámicos para validar la capacidad de evasión del DWA; (2) comparar el desempeño de Gmapping con Hector SLAM y Cartographer; (3) implementar un planificador local TEB para trayectorias más suaves en entornos con pasillos estrechos; y (4) migrar la simulación a ROS 2 y Gazebo Ignition para explorar las ventajas de la nueva arquitectura.
+
+% ============================================================
+% REFERENCIAS BIBLIOGRÁFICAS
+% ============================================================
+\section*{Referencias}
+\addcontentsline{toc}{section}{Referencias}
+
+% Referencias en formato Harvard (manual)
+\begin{thebibliography}{99}
+
+\bibitem[Thrun et al.(2005)]{thrun2005probabilistic}
+Thrun, S., Burgard, W. and Fox, D. (2005) \textit{Probabilistic Robotics}. Cambridge, MA: MIT Press.
+
+\bibitem[Siegwart et al.(2011)]{siegwart2011introduction}
+Siegwart, R., Nourbakhsh, I.R. and Scaramuzza, D. (2011) \textit{Introduction to Autonomous Mobile Robots}. 2nd edn. Cambridge, MA: MIT Press.
+
+\bibitem[Grisetti et al.(2007)]{grisetti2007improved}
+Grisetti, G., Stachniss, C. and Burgard, W. (2007) `Improved techniques for grid mapping with Rao-Blackwellized particle filters', \textit{IEEE Transactions on Robotics}, 23(1), pp. 34--46. doi:10.1109/TRO.2006.889486.
+
+\bibitem[Fox(2003)]{fox2003adapting}
+Fox, D. (2003) `Adapting the sample size in particle filters through KLD-sampling', \textit{International Journal of Robotics Research}, 22(12), pp. 985--1003. doi:10.1177/0278364903022012001.
+
+\bibitem[Fox et al.(1997)]{fox1997dynamic}
+Fox, D., Burgard, W. and Thrun, S. (1997) `The dynamic window approach to collision avoidance', \textit{IEEE Robotics \& Automation Magazine}, 4(1), pp. 23--33. doi:10.1109/100.580977.
+
+\bibitem[Hart et al.(1968)]{hart1968formal}
+Hart, P.E., Nilsson, N.J. and Raphael, B. (1968) `A formal basis for the heuristic determination of minimum cost paths', \textit{IEEE Transactions on Systems Science and Cybernetics}, 4(2), pp. 100--107. doi:10.1109/TSSC.1968.300136.
+
+\bibitem[Quigley et al.(2009)]{quigley2009ros}
+Quigley, M., Conley, K., Gerkey, B., Faust, J., Foote, T., Leibs, J., Wheeler, R. and Ng, A.Y. (2009) `ROS: an open-source Robot Operating System', in \textit{Proceedings of the IEEE International Conference on Robotics and Automation (ICRA) Workshop on Open Source Software}. Kobe, Japan.
+
+\bibitem[Koenig and Howard(2004)]{koenig2004gazebo}
+Koenig, N. and Howard, A. (2004) `Design and use paradigms for Gazebo, an open-source multi-robot simulator', in \textit{Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}. Sendai, Japan, pp. 2149--2154. doi:10.1109/IROS.2004.1389727.
+
+\bibitem[Montemerlo and Thrun(2007)]{montemerlo2007fastslam}
+Montemerlo, M. and Thrun, S. (2007) `FastSLAM: a factored solution to the simultaneous localization and mapping problem', in \textit{Proceedings of the AAAI National Conference on Artificial Intelligence}. Vancouver, Canada, pp. 593--598.
+
+\bibitem[Marder-Eppstein et al.(2010)]{marder2010office}
+Marder-Eppstein, E., Berger, E., Foote, T., Gerkey, B. and Konolige, K. (2010) `The office marathon: Robust navigation in an indoor office environment', in \textit{Proceedings of the IEEE International Conference on Robotics and Automation (ICRA)}. Anchorage, AK, pp. 300--307. doi:10.1109/ROBOT.2010.5509725.
+
+\bibitem[Rublee et al.(2011)]{rublee2011orb}
+Rublee, E., Rabaud, V., Konolige, K. and Bradski, G. (2011) `ORB: an efficient alternative to SIFT or SURF', in \textit{Proceedings of the IEEE International Conference on Computer Vision (ICCV)}. Barcelona, Spain, pp. 2564--2571. doi:10.1109/ICCV.2011.6126544.
+
+\bibitem[Lynch and Park(2017)]{lynch2017modern}
+Lynch, K.M. and Park, F.C. (2017) \textit{Modern Robotics: Mechanics, Planning, and Control}. Cambridge: Cambridge University Press.
+
+\end{thebibliography}
+
+\newpage
+
+% ============================================================
+% APÉNDICE: FRAGMENTOS DE CONFIGURACIÓN
+% ============================================================
+\section*{Apéndice A: Fragmentos de Configuración}
+\addcontentsline{toc}{section}{Apéndice A: Fragmentos de Configuración}
+
+\subsection*{A.1 Comandos de Lanzamiento}
+
+\begin{lstlisting}[caption={Pipeline completo de lanzamiento por tarea.}, style=bashstyle]
+# === Tarea 1: Mapeo ===
+roslaunch robot_gazebo robot.launch
+roslaunch robot_gazebo gmapping.launch
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+rosrun map_server map_saver -f ~/maps/mapa_final
+
+# === Tarea 2: Localización ===
+roslaunch robot_gazebo robot.launch
+rosrun map_server map_server ~/maps/mapa_final.yaml
+roslaunch robot_gazebo amcl.launch
+# (En RViz: 2D Pose Estimate)
+
+# === Tarea 3: Navegación ===
+roslaunch robot_gazebo robot.launch
+rosrun map_server map_server ~/maps/mapa_final.yaml
+roslaunch robot_gazebo amcl.launch
+roslaunch robot_gazebo move_base.launch
+# (En RViz: 2D Nav Goal)
+\end{lstlisting}
+
+\subsection*{A.2 Configuración YAML de Costmaps}
+
+\begin{lstlisting}[caption={Parámetros comunes de costmap (\texttt{costmap\_common\_params.yaml}).}, style=yamlstyle]
+obstacle_range: 3.5
+raytrace_range: 4.0
+inflation_radius: 0.40
+cost_scaling_factor: 5.0
+
+observation_sources: laser_scan_sensor
+
+laser_scan_sensor:
+  {
+    sensor_frame: laser_frame,
+    data_type: LaserScan,
+    topic: /scan,
+    marking: true,
+    clearing: true,
+    expected_update_rate: 20.0,
+    min_obstacle_height: 0.0,
+    max_obstacle_height: 0.5,
+  }
+\end{lstlisting}
+
+\subsection*{A.3 Parámetros DWA}
+
+\begin{lstlisting}[caption={Planificador local DWA (\texttt{dwa\_local\_planner\_params.yaml}).}, style=yamlstyle]
+DWAPlannerROS:
+  max_vel_x: 0.55
+  min_vel_x: -0.10
+  max_vel_theta: 1.0
+  min_in_place_vel_theta: 0.5
+
+  acc_lim_x: 2.5
+  acc_lim_theta: 3.2
+
+  sim_time: 1.5
+  vx_samples: 6
+  vtheta_samples: 20
+
+  path_distance_bias: 32.0
+  goal_distance_bias: 24.0
+  occdist_scale: 0.02
+
+  xy_goal_tolerance: 0.10
+  yaw_goal_tolerance: 0.05
+  controller_frequency: 10.0
+\end{lstlisting}
+
+\end{document}

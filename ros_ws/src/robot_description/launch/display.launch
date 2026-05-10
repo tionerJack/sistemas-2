@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="model" default="$(find robot_description)/urdf/robot.xacro"/>
+  <arg name="gui" default="true"/>
+
+  <!-- Convertir Xacro a URDF -->
+  <param name="robot_description" command="$(find xacro)/xacro '$(arg model)'"/>
+
+  <!-- Publicar TF -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+  <!-- Joint State Publisher GUI -->
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" if="$(arg gui)"/>
+
+  <!-- RViz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_description)/config/robot.rviz" required="true"/>
+</launch>

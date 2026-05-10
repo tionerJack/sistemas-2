@@ -1,0 +1,268 @@
+<?xml version="1.0"?>
+<robot name="differential_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- ============================================ -->
+  <!-- PROPIEDADES DEL ROBOT                        -->
+  <!-- ============================================ -->
+  <xacro:property name="base_length" value="0.40"/>
+  <xacro:property name="base_width" value="0.30"/>
+  <xacro:property name="base_height" value="0.15"/>
+  <xacro:property name="base_mass" value="3.0"/>
+
+  <xacro:property name="wheel_radius" value="0.075"/>
+  <xacro:property name="wheel_width" value="0.04"/>
+  <xacro:property name="wheel_mass" value="0.3"/>
+  <xacro:property name="wheel_separation" value="0.35"/>
+
+  <xacro:property name="caster_radius" value="0.025"/>
+  <xacro:property name="caster_mass" value="0.05"/>
+
+  <!-- Materiales -->
+  <material name="blue">
+    <color rgba="0.1 0.34 0.86 1.0"/>
+  </material>
+  <material name="dark_gray">
+    <color rgba="0.3 0.3 0.3 1.0"/>
+  </material>
+  <material name="light_gray">
+    <color rgba="0.7 0.7 0.7 1.0"/>
+  </material>
+
+  <!-- ============================================ -->
+  <!-- BASE_LINK (chasis, raíz del robot)           -->
+  <!-- ============================================ -->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${base_mass}"/>
+      <inertia ixx="${(1/12)*base_mass*(base_width*base_width + base_height*base_height)}"
+               iyy="${(1/12)*base_mass*(base_length*base_length + base_height*base_height)}"
+               izz="${(1/12)*base_mass*(base_length*base_length + base_width*base_width)}"
+               ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <box size="${base_length} ${base_width} ${base_height}"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${base_length} ${base_width} ${base_height}"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <!-- ============================================ -->
+  <!-- RUEDA IZQUIERDA                              -->
+  <!-- ============================================ -->
+  <joint name="base_to_left_wheel" type="revolute">
+    <parent>base_link</parent>
+    <child>left_wheel_link</child>
+    <origin xyz="0 ${wheel_separation/2} 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1.0" velocity="10.0" lower="-3.14159" upper="3.14159"/>
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+
+  <link name="left_wheel_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${wheel_mass}"/>
+      <inertia ixx="${(1/2)*wheel_mass*wheel_radius*wheel_radius}"
+               iyy="${(1/12)*wheel_mass*(3*wheel_radius*wheel_radius + wheel_width*wheel_width)}"
+               izz="${(1/2)*wheel_mass*wheel_radius*wheel_radius}"
+               ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+      <material name="dark_gray"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+    </collision>
+  </link>
+
+  <!-- ============================================ -->
+  <!-- RUEDA DERECHA                                -->
+  <!-- ============================================ -->
+  <joint name="base_to_right_wheel" type="revolute">
+    <parent>base_link</parent>
+    <child>right_wheel_link</child>
+    <origin xyz="0 ${-wheel_separation/2} 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1.0" velocity="10.0" lower="-3.14159" upper="3.14159"/>
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+
+  <link name="right_wheel_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${wheel_mass}"/>
+      <inertia ixx="${(1/2)*wheel_mass*wheel_radius*wheel_radius}"
+               iyy="${(1/12)*wheel_mass*(3*wheel_radius*wheel_radius + wheel_width*wheel_width)}"
+               izz="${(1/2)*wheel_mass*wheel_radius*wheel_radius}"
+               ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+      <material name="dark_gray"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+    </collision>
+  </link>
+
+  <!-- ============================================ -->
+  <!-- RUEDA LOCA (caster)                          -->
+  <!-- ============================================ -->
+  <joint name="base_to_caster" type="fixed">
+    <parent>base_link</parent>
+    <child>caster_wheel_link</child>
+    <origin xyz="-0.15 0 ${-base_height/2}" rpy="0 0 0"/>
+  </joint>
+
+  <link name="caster_wheel_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${caster_mass}"/>
+      <inertia ixx="${(2/5)*caster_mass*caster_radius*caster_radius}"
+               iyy="${(2/5)*caster_mass*caster_radius*caster_radius}"
+               izz="${(2/5)*caster_mass*caster_radius*caster_radius}"
+               ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <sphere radius="${caster_radius}"/>
+      </geometry>
+      <material name="light_gray"/>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="${caster_radius}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ============================================ -->
+  <!-- LIDAR (laser_frame)                          -->
+  <!-- ============================================ -->
+  <joint name="base_to_laser" type="fixed">
+    <parent>base_link</parent>
+    <child>laser_frame</child>
+    <origin xyz="0.15 0 0.08" rpy="0 0 0"/>
+  </joint>
+
+  <link name="laser_frame">
+    <inertial>
+      <mass value="0.001"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" iyy="1e-6" izz="1e-6" ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+  </link>
+
+  <!-- ============================================ -->
+  <!-- TRANSMISIONES (Gazebo)                       -->
+  <!-- ============================================ -->
+  <transmission name="trans_left_wheel">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_to_left_wheel">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_left">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="trans_right_wheel">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_to_right_wheel">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_right">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <!-- ============================================ -->
+  <!-- PLUGIN: DIFF_DRIVE (Gazebo)                  -->
+  <!-- ============================================ -->
+  <gazebo>
+    <plugin name="diff_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <rosDebugLevel>na</rosDebugLevel>
+      <publishWheelTF>true</publishWheelTF>
+      <publishWheelJointState>true</publishWheelJointState>
+      <robotNamespace>/</robotNamespace>
+      <leftJoint>base_to_left_wheel</leftJoint>
+      <rightJoint>base_to_right_wheel</rightJoint>
+      <wheelSeparation>${wheel_separation}</wheelSeparation>
+      <wheelDiameter>${wheel_radius*2}</wheelDiameter>
+      <torque>1.0</torque>
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>base_link</robotBaseFrame>
+      <publishOdomTF>true</publishOdomTF>
+      <publishWheelTF>true</publishWheelTF>
+      <publishWheelJointState>true</publishWheelJointState>
+    </plugin>
+  </gazebo>
+
+  <!-- ============================================ -->
+  <!-- PLUGIN: LIDAR (Gazebo)                       -->
+  <!-- ============================================ -->
+  <gazebo reference="laser_frame">
+    <sensor type="ray" name="head_laser">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>20</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1.0</resolution>
+            <min_angle>-2.35619</min_angle>  <!-- -135° = 270° total -->
+            <max_angle>2.35619</max_angle>   <!-- +135° -->
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.10</min>
+          <max>10.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="laser_node" filename="libgazebo_ros_laser.so">
+        <topicName>scan</topicName>
+        <frameName>laser_frame</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+<!-- Estabilización física Gazebo -->
+<gazebo reference="base_link">
+  <material>Gazebo/Blue</material>
+  <mu1>1.0</mu1>
+  <mu2>1.0</mu2>
+</gazebo>
+
+</robot>

@@ -1,0 +1,6 @@
+# Controladores del robot
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+
+# Los controladores de ruedas son manejados por el plugin diff_drive en URDF

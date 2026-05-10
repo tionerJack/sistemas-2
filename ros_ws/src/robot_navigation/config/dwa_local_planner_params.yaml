@@ -1,0 +1,47 @@
+# DWA Local Planner - Tarea 3: Navegación
+# Basado en ARCHITECTURE.md §5.3
+
+DWAPlannerROS:
+  # Límites de velocidad
+  max_vel_x: 0.55
+  min_vel_x: -0.10
+  max_vel_y: 0.0
+  min_vel_y: 0.0
+  max_vel_theta: 1.0
+  min_vel_theta: -1.0
+  min_in_place_vel_theta: 0.5
+
+  # Aceleraciones
+  acc_lim_x: 2.5
+  acc_lim_y: 0.0
+  acc_lim_theta: 3.2
+
+  # Ventana de simulación (DWA)
+  sim_time: 1.5
+  sim_granularity: 0.025
+  vx_samples: 6
+  vy_samples: 1
+  vtheta_samples: 20
+
+  # Función objetivo DWA: G(v,ω) = α·path_dist + β·goal_dist + γ·occ_dist
+  path_distance_bias: 32.0
+  goal_distance_bias: 24.0
+  occdist_scale: 0.02
+  heading_lookahead: 0.325
+  forward_point_distance: 0.325
+
+  # Tolerancias
+  xy_goal_tolerance: 0.10
+  yaw_goal_tolerance: 0.05
+  latch_xy_goal_tolerance: false
+
+  # Oscilación
+  oscillation_reset_dist: 0.05
+  oscillation_reset_angle: 0.2
+
+  # Otras configuraciones
+  prune_plan: true
+  publish_traj_pc: true
+  publish_cost_grid_pc: true
+  global_frame_id: odom
+  controller_frequency: 10.0
